@@ -44,3 +44,36 @@ window.addEventListener("scroll", () => {
 });
 // ********** smooth scroll ************
 // select links
+const scrollLinks = document.querySelectorAll(".scroll-link");
+scrollLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    // Stop default event from happening
+    e.preventDefault();
+    // Navigate to target section
+    const id = e.currentTarget.getAttribute("href").slice(1);
+    // console.log(id);
+    const element = document.getElementById(id);
+    // Get navbar height
+    const navHeight = navbar.getBoundingClientRect().height;
+    // Get container height
+    const containerHeight = linksContainer.getBoundingClientRect().height;
+    // Flag
+    const isNavFixed = navbar.classList.contains("fixed-nav");
+    let pos = element.offsetTop - navHeight;
+    // console.log(pos);
+
+    if (!isNavFixed) {
+      pos = pos - navHeight;
+    }
+    if (navHeight > 70) {
+      pos = pos + containerHeight;
+    }
+
+    window.scrollTo({
+      left: 0,
+      top: pos,
+    });
+    // Closing off navbar
+    linksContainer.style.height = 0;
+  });
+});
